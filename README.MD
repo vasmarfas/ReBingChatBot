@@ -1,11 +1,8 @@
 Language : English [简体中文](README.zh-cn.md)
 # Description
 
-Bing chat Telegram bot implemented in Python that utilizes unofficial [EdgeChat](https://github.com/acheong08/EdgeGPT) API
+Bing chat Telegram bot implemented in Python that utilizes unofficial [ReEdgeGPT](https://github.com/Integration-Automation/ReEdgeGPT) API
 
-## Known issues
-
-- If Microsoft changes the message count in the conversation, the Messages In Conversation will be 5 until the cookie is updated.
 
 ## Screenshot
 
@@ -47,22 +44,22 @@ pip install -r requirements.txt
 ```
 
 ## Set environment variables
-
+You should copy **.env.example** to **.env** and edit it:
+```shell
+cp .env.example .env
+```
 ### Required variable
 
 ```shell
-export BOT_TOKEN='REPLACE YOUR BOT TOKEN'
-export ALLOWED_USER_IDS='XXXXXXXXX,XXXXXXXX,XXXXXXXX'
+BOT_TOKEN='REPLACE YOUR BOT TOKEN'
+ALLOWED_USER_IDS='XXXXXXXXX,XXXXXXXX,XXXXXXXX'
 ```
 
 ### Optional variable
 
 ```shell
-#Default value is './cookie.json'
-export COOKIE_PATH='xxxxxx' 
-
 #Default value is False , if you set True , Anyone can use the robot
-export PUBLIC_MODE=False
+PUBLIC_MODE=False
 ```
 
 :warning:Please set ALLOWED_USER_IDS even if PUBLIC_MODE is True , because only ALLOWED_USER_IDS can switch the conversation style 
@@ -70,8 +67,8 @@ export PUBLIC_MODE=False
 If you want to add the bot to the group chat , please set these variables and  give the bot admin permission
 
 ```shell
-export BOT_ID='@YOURBOTID' #DON'T forget @
-export GROUP_MODE=False #Default value is False
+BOT_ID='@BOTUSERNAME' #DON'T forget @
+GROUP_MODE=False #Default value is False
 ```
 If GROUP_MODE is True , The bot will reply to all messages in the group chat , else  the bot will only reply to @ messages in the group chat. Private chat will always reply
 

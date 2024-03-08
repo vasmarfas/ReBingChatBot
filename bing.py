@@ -1,17 +1,29 @@
 import asyncio
+import json
 import os
 import re
 
 import telebot
-from EdgeGPT import Chatbot, ConversationStyle
+from re_edge_gpt import Chatbot, ConversationStyle
 from telebot.util import quick_markup
+from pydantic_settings import BaseSettings, SettingsConfigDict
+class Settings(BaseSettings):
+    BOT_TOKEN: str
+    BOT_ID: str
+    ALLOWED_USER_IDS: str
+    GROUP_MODE: str
+    PUBLIC_MODE: str
+    model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
 
-BOT_TOKEN = os.getenv('BOT_TOKEN')
-ALLOWED_USER_IDS = os.getenv('ALLOWED_USER_IDS').split(',')
-BOT_ID = os.getenv('BOT_ID', '')
-COOKIE_PATH = os.getenv('COOKIE_PATH', './cookie.json')
-GROUP_MODE = os.getenv('GROUP_MODE', 'False')
-PUBLIC_MODE = os.getenv('PUBLIC_MODE', 'False')
+config = Settings()
+BOT_TOKEN = config.BOT_TOKEN
+# ALLOWED_USER_IDS = [502576286,412374712]
+ALLOWED_USER_IDS = config.ALLOWED_USER_IDS.split(",")
+BOT_ID = config.BOT_ID
+COOKIE_PATH = './bing_cookies.json'
+cookies = json.loads(open(COOKIE_PATH, encoding="utf-8").read())
+GROUP_MODE = config.GROUP_MODE
+PUBLIC_MODE = config.PUBLIC_MODE
 
 print("\033[1;33mThe startup is successful, the configuration is as follows : ")
 print("BOT_TOKEN: " + BOT_TOKEN)
@@ -49,7 +61,7 @@ def send_reset(message):
     if is_allowed(message) or PUBLIC_MODE == "True" or message.chat.type == "group":
         try:
             if message.from_user.id not in EDGES:
-                EDGES[message.from_user.id] = Chatbot(cookie_path=COOKIE_PATH)
+                EDGES[message.from_user.id] = Chatbot(cookies=cookies)
             asyncio.run(EDGES[message.from_user.id].reset())
         except Exception as e:
             print("\033[31mError: ", e)
@@ -149,7 +161,7 @@ def callback_all(callback_query):
 
 async def bing_chat(message_text, message):
     if message.from_user.id not in EDGES:
-        EDGES[message.from_user.id] = Chatbot(cookie_path=COOKIE_PATH)
+        EDGES[message.from_user.id] = Chatbot(cookies=cookies)
     response_dict = await EDGES[message.from_user.id].ask(prompt=message_text,
                                                           conversation_style=my_conversation_style)
 

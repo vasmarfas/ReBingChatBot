@@ -58,7 +58,7 @@ export ALLOWED_USER_IDS='XXXXXXXXX,XXXXXXXX,XXXXXXXX'
 ### 可选变量
 
 ```shell
-#默认值为 './cookie.json'
+#默认值为 './bing_cookies.json'
 export COOKIE_PATH='xxxxxx' 
 
 #默认值为 False , 如果你设置为True，任何人都可以使用bot
