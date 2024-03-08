@@ -35,7 +35,7 @@ switch - Switch conversation style ( creative , balanced , precise )
 - Go to `bing.com`
 - Open the extension
 - Click "Export" on the bottom right (This saves your cookies to clipboard)
-- Paste your cookies into a file `cookies.json`. The format of json refers to `cookie.exaple.json`(The middle field is omitted)
+- Paste your cookies into a file `bing_cookies.json`. The format of json refers to `bing_cookies-exaple.json`(The middle field is omitted)
 
 ## Install requirements
 
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ## Set environment variables
 You should copy **.env.example** to **.env** and edit it:
 ```shell
-cp .env.example .env
+cp .env-example .env
 ```
 ### Required variable
 
